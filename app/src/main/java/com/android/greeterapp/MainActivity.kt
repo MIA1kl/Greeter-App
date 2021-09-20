@@ -6,26 +6,38 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var name : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val btn : Button = findViewById(R.id.button)
-        btn.setOnClickListener {
+        button.setOnClickListener {
             showName()
         }
     }
 
     private fun showName() {
-        val enteredText : EditText = findViewById(R.id.editText)
-        val name : TextView = findViewById(R.id.text)
-        val text = enteredText.text.toString()
-
-        if (text.length==0){
+        val text = editText.text.toString()
+        name = "Hello, $text"
+        if (text.isEmpty()){
             Toast.makeText(this,"Invalid enter",Toast.LENGTH_SHORT).show()
         }
-        else name.setText("Hello, "+ text)
+        else textView.text = name
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val savedName : String = name
+        outState.putString("savedString", name)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val savedVal :String = savedInstanceState.getString("savedString","")
+        name = savedVal
+        textView.text = name
     }
 }
