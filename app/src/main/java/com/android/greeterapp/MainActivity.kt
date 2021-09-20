@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         val savedVal :String = savedInstanceState.getString("savedString","")
         name = savedVal
-        textView.text = name
+        if (editText.text.toString().isEmpty()){
+            Toast.makeText(this,"Invalid enter",Toast.LENGTH_SHORT).show()
+        }
+        else textView.text = name
     }
 }
